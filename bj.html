@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="stil.css">
+    <script
+    src="https://code.jquery.com/jquery-3.5.1.min.js"
+    integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+    crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+    <div class="modal-pozadina">
+          <div class="pravilaUkratko"> <h2>BlackJack pravila</h2>
+            <p>BlackJack je kartaska igra. U ovom slucaju igrate <br> samo ti i djelitelj. Cilj je biti što bliže broju 21, <br>
+               ali pritom vrijednost karata ne smije prijeci 21.<br> Ostvarili ste BlackJack ako pri dijeljenju, bez dodatnih karata<br>
+              ostvarite vrijednost karti 21, ali da pritom djelitelj nema 21. <br> Karte od 10 do K imaju vrijednost 10, A ima vrijednost 1 ili 11, <br>
+              a se ostale karte imaju vrijednost koja stoji na njima. <br>
+              Hit- ako niste zadovoljni trenutnom vrijednoscu svojih karti ova opcija se koristi kako bi vam djelitelj dodijelio jos jednu <br>
+              Double- ukoliko imate dovoljno novca u kasi mozete uduplati svoj ulog. Pri tome dobivate jos jednu kartu, samo jednu! <br>
+              Dosta- ovu opciju uzimate kada ste zadovoljni ukupnom vrijednoscu svojih karata. <br>SRETNO!!!</p>   <div id='iks' class="iks">+</div></div>
+         
+ </div>
+    <div class="zaglavlje"><img src="logo.svg" alt=""></div>
+    <div class="pocetna" id="pocetna">
+         <div class="meni" id="igraj"><button type="button" class="btn btn-primary btn-lg btn-block" onclick="igraj()"><h2 class="font-weight-bold">IGRAJ</h2></button></div>
+         <div class="meni" id="pravila"><button type="button" class="btn btn-primary btn-lg btn-block" onclick="prikazPravila()"><h2 class="font-weight-bold">PRAVILA</h2></button></div>
+         <div class="meni" id="rekordi"><button type="button" class="btn btn-primary btn-lg btn-block"><h2 class="font-weight-bold">REKORDI</h2></button></div>
+
+    </div>
+    
+    <div class="UnosImena" id="unosimena">   
+        <input type="email" class="form-control input-lg" id="zaNick" aria-describedby="emailHelp" placeholder="Unesi nick" style="height:60px">
+        <button type="button" class="btn btn-secondary btn-lg zaUnos" onclick="provjera()">UREDU</button>
+    </div>
+    
+    <div id="igrica" class="igrica">
+
+        <div class="grid1" id="grid1"> 
+            <div class="accordion" onclick="akordion(0)"><h3>BROJANJE KARTI</h3></div>
+            <div class="zaTekst"><p>Izbrojana vrijednost: 0</p></div>
+            <div class="accordion" onclick="akordion(1)"><h3>STATISTIKA</h3></div>
+            <div class="zaTekst"><p>Podijeljeno karti: 0 <br>Ostalo karti: 208</p></div>
+            <div class="accordion" onclick="akordion(2)"><h3>AKTUELNA RUKA</h3></div>
+            <div class="zaTekst"><p>Vi: 0<br> Kuća: 0</p></div>
+        </div>
+
+        <div class="grid4" id="grid4">
+             <div class="grid2" id="grid2">   <!-- Ovdje sam napravio gresku u koracima sto se tice gridova, prvo sam malo radio html i css pa sam tek onda
+                                                    dodavao funkcionalnosti tako da sam morao malo preuredjivati sastav gridova pa sad gledajuci po imenima izgleda
+                                                    dosta nelogicno. Uglavnom grid1 je lijevi crni dio, dok je grid 4 citav desni dio (slika stola). A grid 3,2 i odabir su
+                                                    sastavni dijelovi grida 4. Mogao sam to mijenjati i dati malo logicnije nazive ali mi se nije dalo traziti po kodu i mijenjati svaku
+                                                    jQuery recenicu u kojoj sam ih pozivao, posto znam da bi doslo do nekog previda i morao bih ostati trazit sta nije uredu jos 
+                                                    pola sata -->
+             
+             </div>
+            <div class="grid3" id="grid3">
+                <div class="prijeDijeljenja" id="prijeDijeljenja">
+                <div class="cipovi" id="cipovi">
+                    <div class="chip cip5" id="cip5" onclick="DodajUlog(5)" style="background-color:green" ><h2>5</h2></div>
+                    <div class="chip cip10" id="cip10" onclick="DodajUlog(10)"><h2>10</h2></div>
+                    <div class="chip cip100" id="cip100" onclick="DodajUlog(100)" style="background-color:azure"><h2>100</h2></div>
+                    <div class="chip cip500" id="cip500" onclick="DodajUlog(500)" style="background-color:blueviolet"><h2>500</h2></div>
+                    <div class="chip cip1000" id="cip1000" onclick="DodajUlog(1000)" style="background-color:crimson"><h2>1k</h2></div>
+                    <div class="chip cip10000" id="cip10000"onclick="DodajUlog(10000)" style="background-color:dimgray"><h2>10k</h2></div>
+                </div>
+                <div class="opcijePD">
+                      <div class="OPD" id="bankaD" ><h2>Banka</h2></div>
+                      <div class="OPD" id="pocniD" onclick="ZapocniDijeljenje()"><h2>Dijeli</h2></div>
+                      <div class="OPD" id="ulogD"> <h2>Ulog</h2></div>
+                      <div class="OPD" id="resetD" onclick="ResetujUlog()"><h2>Reset</h2></div>
+                </div>
+               </div>
+            </div>
+              <div id="odabir" class="odabir">
+                <div id="hit" class="odab hit" onclick="hit()"><h1>HIT</h1></div>
+                <div id="double" class="odab double" onclick="duplanje()"><h1>DOUBLE</h1></div>
+                <div id="dosta" class="odab dosta" onclick="dosta()"><h1>DOSTA</h1></div>
+               
+             </div>
+              <div class="ulazniText" id="ulazniText">
+                <div class="Poruka"></div>
+              </div>
+              
+            </div>
+
+        </div>
+  
+      </div>
+
+    <script>
+       
+        function akordion(brAc){
+            if(document.getElementsByClassName("zaTekst")[brAc].style.display!="none"){
+           document.getElementsByClassName("zaTekst")[brAc].style.display="none";
+           document.getElementsByClassName("accordion")[brAc].style.border="2px solid rgb(141, 10, 10)";
+           document.getElementsByClassName("accordion")[brAc].style.boxShadow="-2px 2px 8px rgb(119, 11, 11)";
+            
+            }
+            else{ 
+                document.getElementsByClassName("zaTekst")[brAc].style.display="block";
+                document.getElementsByClassName("accordion")[brAc].style.border="2px solid rgb(48, 199, 48)";
+                document.getElementsByClassName("accordion")[brAc].style.boxShadow="-2px 2px 8px rgb(45, 138, 16)";
+            }
+        }
+    
+    
+       //------------------------------------------------------------------------------------------------
+       //------------------------------------------------------------------------------------------------
+       //------------------------------------------------------------------------------------------------
+       // POŠTO BLACKJACK OBIČNO KORISTI 4 ŠPILA KARATA U NAREDNOM DIJELU KODA PRAVIMO UPRAVO TO - 4 ŠPILA KARATA
+       var nizBrojeva=['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+       var nizZnakova=['Srce','Karo','Pik','Tref'];
+       var nizKarti=[]; //deklarisemo niz karti koji cemo popuniti kroz dvostruku for petlju - u ovom slucaju dvodimenzionalni niz
+       for(var brojSpilova=0; brojSpilova<4; brojSpilova++){
+          for(var i=0; i<4; i++){  // ova for petlja predstavlja četiri znaka 
+             for(var j=0; j<13; j++){  // ova for petlja predstavlja 13 različitih karti
+               var indeks=(brojSpilova*(51+1))+i*13+j; //u prvoj iteraciji bice brojevi od 0 do 13 (0+i [0-12], druga iteracija 13+i...itd) 
+               nizKarti[indeks]=[nizZnakova[i],nizBrojeva[j]]; //dakle pravimo 2d niz sa 52 reda (svaki po jedna karta) od kojih svaki ima po 2 kolone,
+                                                               // u prvoj koloni se nalazi znak, u drugoj vrijednost karte
+             }
+          }
+       }
+       // dakle sada imamo cetiri gotova špila, karte se krecu u rasponu 0-207...
+       //------------------------------------------------------------------------------------------------
+       //------------------------------------------------------------------------------------------------
+       //------------------------------------------------------------------------------------------------
+       
+
+       // SLjedeca stvar koju cu ja napraviti je diler, dakle on ce kada igra zapocinje promijesati svih 208 karata, i izvlacice ih redom tako promijesane,
+       // sve dok ne izvuce svih 208, zatim ce ih ponovo sve promijesati. Osim mijesanja on ce naravno i dijeliti karte, sebi i igraču, svaku ruku dijele se cetiri karte
+       // dvije njemu, dvije igracu. Dijele se cetiri karte, dvije njemu - dvije igracu. Igraceve obe karte su otkrivene, a diler otkriva drugu kartu koja mu bude podijeljena
+       // prva ostaje sakrivena - osim ako dealer nije potrefio BLACKJACK (dvije karte ciji je ukupan zbroj 21)
+       
+                         
+       var NizIndeksa=[];
+       for(var br=0;br<208;br++){
+           NizIndeksa[br]=br;
+           
+       }
+                                       // iz nekog razloga nisam htio da mijesam niz karata, vec cu to uraditi na nacin da napravim novi niz indeksa
+                                              // pa izmijesam njih, i onda ih iskoristim za redanje karata
+       
+       function promijesaj(){
+          for(var brojIzmjena =0; brojIzmjena<208; brojIzmjena++){
+              
+              var pomocna=NizIndeksa[brojIzmjena];
+              var indeksZaZamjenu=Math.floor(Math.random() * 208);
+              NizIndeksa[brojIzmjena]=NizIndeksa[indeksZaZamjenu];
+              NizIndeksa[indeksZaZamjenu]=pomocna;                             // ovdje sam napravio jednostavnu funkciju za mijesanje spilova,
+                                                                               // kao sto se moze vidjeti svaki od 208 clanova tog niza ce biti zamijenjen
+          }                                                                    // sa nekim od svih ostalih (ukljucujuci i sebe), mozda je pomalo robusna ova funkcija jer 
+       }                                                                       // previse puta se radi izmjena, moglo se napraviti i da to bude dosta jednostavnije za
+                                                                               // sam program, ali eto meni je bilo najlakse ovako... a i sigurno ce ih kvalitetno izmjesati
+                     
+      function igraj(){
+         $("#pocetna").css("display","none");
+         $("#unosimena").css("display","block");
+      }
+      var nick; // varijabla koja cuva nick koji unesemo prije pocetka igre
+      function provjera(){
+          if($("#zaNick").val()==null || $("#zaNick").val()==""){
+            $("#zaNick").attr("placeholder","Morate unijeti nesto");
+          }
+          else{
+              nick=$("#zaNick").val();
+              $("#unosimena").css("display","none");
+              pocetakIgre();
+          } 
+      }
+      var Banka; //igracev kapital bez uloga
+      var Ulog=0; //ulozeno
+      var UkupnoKarata=207; // na pocetku igre ima 208 karata, ova varijabla ce nam koristiti da bi program znao kad ponovo da izmjesa karte ali i za dijeljenje
+      function pocetakIgre(){
+          Banka=1000;
+          $("#igrica").css("display","grid");
+          $("#prijeDijeljenja").css("display","none");
+          var $porukaDobrodoslice="<h1>Dobrodošao "+nick+", zauzmi svoje mjesto. Sretno!!!</h1>";
+          $("#ulazniText").css("display","block");
+          $(".Poruka").html($porukaDobrodoslice);
+          $(".novaigra").css("display","none");
+          ResetVarijabli();
+          Apdejt();
+          setTimeout(function(){$("#ulazniText").css("display","none");   $("#prijeDijeljenja").css("display","block");} , 3000);
+          promijesaj();//Kad pocinje igru dodjeljuje mu se 1000
+      }
+      function naPocetak(){
+        $(".karta1").remove();
+        $(".odabir").css("display","none");
+        $("#prijeDijeljenja").css("display","block");
+        $(".grid3").css("display","block");
+        ResetVarijabli();
+        
+        if(UkupnoKarata<50){   // kada od 208 karti ostane njih 50 ili manje, spilovi se ponovo izmijesaju tako da brojanje karata ima manjeg ucinka...
+            promijesaj();
+            UkupnoKarata=207;
+            brojacKarti=0;
+            $(".Poruka").html("<h1>Karte su ponovo izmijesane!!!<br> Zapocinje nova sesija!!!</h1>"+$novaIgra);
+        }
+      }
+      function DodajUlog(BrojZetona){
+           if(BrojZetona>Banka){
+               alert("Iznos veci od raspolozivog!!! Unesite manje");
+           }
+           else{
+               Banka-=BrojZetona;
+               Ulog+=BrojZetona;
+               Apdejt();
+           }
+      }
+      function Apdejt(){               // Vrsi apdejt tako da igrac vidi novo stanje njegove banke i uloga...
+        $("#bankaD").html("<h2>Banka "+Banka+"</h2>");
+        $("#ulogD").html("<h2>Ulog "+Ulog+"</h2>");
+        if(Banka==0 & Ulog==0){
+            
+            $("#ulazniText").css("display","block"); 
+            var $novaIgra="<div class='novaigra' id='novaigra' onclick='pocetakIgre()'><h1>NOVA IGRA</h1></div>";
+            $(".Poruka").html("<h1>Zavrsio si igru. Izgubio si sve!!!</h1>"+$novaIgra);
+                $(".novaigra").css("display","block");
+        }
+      }
+      function ResetujUlog(){
+          Banka+=Ulog;
+          Ulog=0;
+          Apdejt();
+      }
+      function ZapocniDijeljenje(){
+          if(Ulog==0){
+              alert("MORAS NAPRAVITI ULOG");
+          }
+          else{
+            $("#grid3").css("display","flex");
+            $("#grid3").css("justify-content","center");
+            $("#prijeDijeljenja").css("display","none");
+            Dijeljenje(4);
+          }
+      }
+      
+      var dabl=false //koristi se za provjeru da li je doslo do upotrebe opcije double, kada je double upotrebljen, dupla se ulog (ukoliko igrac ima) i izvlaci se jedna karta i prelazi se kraj ruke
+      var Toggle_Brojanje=false; // na pocetku je brojanje karata iskljuceno, tj broje se ali igrac ne vidi, ukoliko da ukljuci moze to uraditi klikom na buton ili iskljuciti
+      //Neke varijable koje nam trebaju za dijeljenje karti
+      var DilerKarte=0;  // cuva ukupnu vrijednost karti dilera
+      var IgracKarte=0; // cuva ukupnu vrijednost karti igraca - u slucaju splita ovo postaje vrijednost jedne grupe karata, u splitVrijednost se cuva druga...
+      var zadnja;  // cuva vrijednost druge podijeljene karte, da bi se u slucaju splita znalo koje karte je dobio igrac ***(NIJE KORISTENO)***
+      var aktivanAs=false; // varijabla kojom se omogucava asu da bude i 1 i 11, ako igrac predje 21 a ima aktivan as, onda se ukupna vrijednost karti smanjuje za 10...
+      var aktivanAs_dealer=false;
+      var Pokrivena;   // cuva indeks pokrivene karte da bi ga mogli unijeti poslje...
+      var blackjack=false; //provjera da li je igrac pogodio BLACKJACK (A i neke od karata sa vrijednosti 10 na prvom dijeljenju)
+      var dilerBJ=false;
+      var gotovo=false;
+      var brojacKarti=0; //dodatna funkcionalnost programa, za nekog ko bi htio da uveca svoje sanse u ovoj igri, mozda i da utrenira 
+                        //profesionalno brojanje karti
+      function Dijeljenje(broj){
+         if(broj==4){
+             $("#grid2").append("<div class='karta0'><div>");
+             setTimeout(function(){ Dijeljenje(3); }, 1000);
+             var VrijednostKarte=Vrijednosti(nizKarti[NizIndeksa[UkupnoKarata]][1],false);
+             DilerKarte+=VrijednostKarte;
+             Pokrivena=NizIndeksa[UkupnoKarata];
+             UkupnoKarata--;   
+         }
+         else if(broj==3 || broj==1){
+             broj--;
+             setTimeout(function(){ Dijeljenje(broj); }, 1000);
+             $("#grid3").append("<div class='karta1'><h1>"+nizKarti[NizIndeksa[UkupnoKarata]][1]+"</h1><div>"); 
+             var VrijednostKarte=Vrijednosti(nizKarti[NizIndeksa[UkupnoKarata]][1],true);
+             BrojacKarti(VrijednostKarte);
+             IgracKarte+=VrijednostKarte;
+             document.getElementsByClassName("zaTekst")[2].innerHTML="<p>Vi: "+IgracKarte+"<br> Kuća: ??? </p>";
+             UkupnoKarata--; 
+         }
+         else if(broj==2){
+            setTimeout(function(){ Dijeljenje(1); }, 1000);
+             $("#grid2").append("<div class='karta1'><h1>"+nizKarti[NizIndeksa[UkupnoKarata]][1]+"</h1><div>"); 
+             var VrijednostKarte=Vrijednosti(nizKarti[NizIndeksa[UkupnoKarata]][1],false);
+             BrojacKarti(VrijednostKarte);
+             DilerKarte+=VrijednostKarte;
+             UkupnoKarata--; 
+         }
+         else if(broj==0){
+             if(IgracKarte==21){
+                 blackjack=true;
+                 KrajRuke();
+             }
+             else if(DilerKarte==21){
+                 dilerBJ=true;
+                 KrajRuke();
+             }
+             else{
+             $(".odabir").css("display","flex");
+             }
+         }
+
+      }
+      function hit(){
+             if(gotovo==false){
+             $("#grid3").append("<div class='karta1'><h1>"+nizKarti[NizIndeksa[UkupnoKarata]][1]+"</h1><div>"); 
+                var VrijednostKarte=Vrijednosti(nizKarti[NizIndeksa[UkupnoKarata]][1],true);
+             BrojacKarti(VrijednostKarte);
+             IgracKarte+=VrijednostKarte;
+             UkupnoKarata--;
+             ProvjeraUkupnogStanja(); 
+             document.getElementsByClassName("zaTekst")[2].innerHTML="<p>Vi: "+IgracKarte+"<br> Kuća: ??? </p>";
+             if(dabl){
+                 KrajRuke();
+             }
+            }
+      }
+      
+      function ProvjeraUkupnogStanja(){
+          if(IgracKarte>21){
+            if(aktivanAs==true){
+                IgracKarte-=10;
+                aktivanAs=false;
+                if(dabl){
+                    gotovo=true;
+                    KrajRuke();
+                }
+            }
+            else{
+               gotovo=true;
+               KrajRuke();
+            }
+          }
+          if(IgracKarte==21){
+              gotovo=true;
+              KrajRuke();
+          }
+      }
+      
+      function KrajRuke(){
+          $(".odabir").css("display","none");
+          var $karta = "<div class='karta1'><h1>"+nizKarti[Pokrivena][1]+"</h1>";
+            document.getElementsByClassName("zaTekst")[2].innerHTML="<p>Vi: "+IgracKarte+"<br> Kuća:"+DilerKarte+" </p>";
+          BrojacKarti(nizKarti[Pokrivena][1]);
+          $(".karta0").replaceWith($karta);
+          if(blackjack==true){
+              if(DilerKarte==21){
+                Banka+=Ulog;
+                Ulog=0;
+                Apdejt();
+                setTimeout(function(){naPocetak();},3500 );
+                
+              }
+              else{
+                  Banka+=Ulog*2.5;
+                  Ulog=0;
+                  Apdejt();
+                  setTimeout(function(){naPocetak();},3500 );
+                  
+              }
+          }
+          else if(dilerBJ){
+             Ulog=0;
+             Apdejt();
+             setTimeout(function(){naPocetak();},3500 );
+            
+          }
+          else if(IgracKarte>21){
+             Ulog=0;
+             Apdejt();
+             setTimeout(function(){naPocetak();},3500 );
+             
+          }
+          else if(DilerKarte<17){
+             $("#grid2").append("<div class='karta1'><h1>"+nizKarti[NizIndeksa[UkupnoKarata]][1]+"</h1><div>"); 
+             var VrijednostKarte=Vrijednosti(nizKarti[NizIndeksa[UkupnoKarata]][1],false);
+             BrojacKarti(VrijednostKarte);
+             DilerKarte+=VrijednostKarte;
+             document.getElementsByClassName("zaTekst")[2].innerHTML="<p>Vi: "+IgracKarte+"<br> Kuća:"+DilerKarte+" </p>";
+             if(DilerKarte>21 & aktivanAs_dealer==true){
+                 DilerKarte-=10;
+                 aktivanAs_dealer=false;
+                 document.getElementsByClassName("zaTekst")[2].innerHTML="<p>Vi: "+IgracKarte+"<br> Kuća:"+DilerKarte+" </p>";
+             }
+             UkupnoKarata--;
+             KrajRuke();
+            
+          }
+          else if(DilerKarte>21){
+            if(aktivanAs_dealer==true){      // ovaj if je cisto za slucaj da na pocetku diler dobije AA
+                 DilerKarte-=10;
+                 KrajRuke();
+             }
+             else
+            {
+            Banka+=Ulog*2;
+              Ulog=0;
+              Apdejt();
+              setTimeout(function(){naPocetak();},3500 );
+            }
+          }
+          else if(DilerKarte>IgracKarte & DilerKarte<22){
+             Ulog=0;
+             Apdejt();
+             setTimeout(function(){naPocetak();},3500 );
+          }
+          else if(DilerKarte<IgracKarte){
+              Banka+=Ulog*2;
+              Ulog=0;
+              Apdejt();
+              setTimeout(function(){naPocetak();},3500 );
+          }
+          else if(DilerKarte==IgracKarte){
+              Banka+=Ulog;
+              Ulog=0;
+              Apdejt();
+              setTimeout(function(){naPocetak();},3500 );
+          }
+         
+      }
+
+      function dosta(){  // funkcija kojom igrac klikom na dugme DOSTA zavrsava svoju podjelu
+          gotovo=true;
+          KrajRuke();
+      }
+
+      function Vrijednosti(vr,igr){   // funkcija koja vraca vrijednost karte, igr se prosljedjuje cisto da se zna da li se radi o igracu ili dealeru, a samo zbog ASa
+        var Podijeljeno;
+                        Podijeljeno=207-UkupnoKarata+1;
+                        var Ostalo=UkupnoKarata;
+                        document.getElementsByClassName("zaTekst")[1].innerHTML="<p>Podijeljeno karti: "+Podijeljeno+"<br>Ostalo karti: "+Ostalo+"</p>";
+        switch(vr){
+               case "1": return 1;
+               case "2": return 2;
+               case "3": return 3;
+               case "4": return 4;
+               case "5": return 5;
+               case "6": return 6;
+               case "7": return 7;
+               case "8": return 8;
+               case "9": return 9;
+               case "10": case "J": case "Q": case "K": return 10;
+               case "A": {
+                   if (igr==true){
+                       aktivanAs=true;
+                   }
+                   else {
+                       aktivanAs_dealer=true;
+                   }
+                   return 11;
+               }
+           }
+      }
+      
+      function ResetVarijabli(){     // Za resetovanje svih varijabli koje se koriste u jednoj ruci i pripadaju samo njoj
+       DilerKarte=0;  // cuva ukupnu vrijednost karti dilera
+       IgracKarte=0; // cuva ukupnu vrijednost karti igraca - u slucaju splita ovo postaje vrijednost jedne grupe karata, u splitVrijednost se cuva druga...
+       split=false;      
+       splitVrijednost=0;
+       dabl=false;
+       aktivanAs=false; // varijabla kojom se omogucava asu da bude i 1 i 11
+       aktivanAs_dealer=false;
+       blackjack=false; //provjera da li je igrac pogodio BLACKJACK (A i neke od karata sa vrijednosti 10 na prvom dijeljenju)
+       dilerBJ=false;
+       gotovo=false;
+      }
+      
+      function BrojacKarti(vr){
+          if(vr<7){
+              brojacKarti++;
+          }
+          else if(vr>9)
+          {
+              brojacKarti--;
+          }
+          document.getElementsByClassName("zaTekst")[0].innerHTML="<p>Izbrojana vrijednost "+brojacKarti+"</p>";
+      }
+      function duplanje(){
+          if(Banka>=Ulog & !dabl){
+              Banka-=Ulog;
+              Ulog+=Ulog;
+              dabl=true;
+              hit();
+          }
+      }
+      
+      function prikazPravila(){
+        $(".modal-pozadina").css("display","flex");
+      }
+      document.getElementById("iks").addEventListener("click",function(){
+        $(".modal-pozadina").css("display","none");
+      });
+    </script>
+   
+</body>
+</html>
